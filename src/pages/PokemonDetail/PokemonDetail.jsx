@@ -1,0 +1,1 @@
+export const PokemonDetail = () => <div>Pokemon Detail</div>;

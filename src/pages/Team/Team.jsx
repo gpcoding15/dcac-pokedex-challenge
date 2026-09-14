@@ -1,0 +1,1 @@
+export const Team = () => <div>Team</div>
