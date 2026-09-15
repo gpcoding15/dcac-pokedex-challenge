@@ -1,0 +1,57 @@
+.card {
+    list-style: none;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 16px;
+}
+
+.image {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+}
+
+.number {
+    margin: 0;
+    font-size: 14px;
+}
+
+.name {
+    margin: 8px 0;
+    font-size: 20px;
+    font-weight: 700;
+    text-transform: capitalize;
+}
+
+.types {
+    display: flex;
+    gap: 8px;
+}
+
+.type {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: capitalize;
+    color: white;
+}
+
+.normal { background-color: #a8a878; }
+.fire { background-color: #f08030; }
+.water { background-color: #6890f0; }
+.electric { background-color: #f8d030; }
+.grass { background-color: #78c850; }
+.ice { background-color: #98d8d8; }
+.fighting { background-color: #c03028; }
+.poison { background-color: #a079a0; }
+.ground { background-color: #e0c068; }
+.flying { background-color: #a890f0; }
+.psychic { background-color: #f85888; }
+.bug { background-color: #a8b820; }
+.rock { background-color: #b8a038; }
+.ghost { background-color: #705898; }
+.dragon { background-color: #6f4cc1; }
+.dark { background-color: #705848; }
+.steel { background-color: #b8b8d0; }
+.fairy { background-color: #ee99ac; }
