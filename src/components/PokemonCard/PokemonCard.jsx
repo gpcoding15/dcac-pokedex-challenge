@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from "react-router-dom";
 import { useGetPokemonByIdQuery } from '../../services/pokemonApi';
 import styles from "./PokemonCard.module.css";
 import { PokemonCardSkeleton } from "./PokemonCardSkeleton";
@@ -15,28 +16,29 @@ export const PokemonCard = ({pokemon}) => {
 
     return (
         <li className={styles.card}>
-            <p className={styles.number}>#{data.id}</p>
-            <p className={styles.name}>{pokemon.name}</p>
-            <div className={styles.imageContainer}>
-                {!loadedImage && (
-                    <div className={styles.ImagePlaceholder}></div>
-                )}
-                <img
-                    src={data.sprites.front_default} 
-                    alt={pokemon.name} 
-                    className={`${styles.image} ${
-                        loadedImage ? styles.loadedImage : ""
-                    }`}
-                    onLoad={() => setLoadedImage(true)}
-                />
-            </div>
-            
-            <div className={styles.types}>
-                {data.types.map((t) => (
-                <span key={t.type.name} className={`${styles.type} ${styles[t.type.name]}`}>{t.type.name}</span>
-            ))}
-            </div>
-            
+            <Link className={styles.cardLink} to={`/pokemon/${data.id}`}>
+                <p className={styles.number}>#{data.id}</p>
+                <p className={styles.name}>{pokemon.name}</p>
+                <div className={styles.imageContainer}>
+                    {!loadedImage && (
+                        <div className={styles.ImagePlaceholder}></div>
+                    )}
+                    <img
+                        src={data.sprites.front_default} 
+                        alt={pokemon.name} 
+                        className={`${styles.image} ${
+                            loadedImage ? styles.loadedImage : ""
+                        }`}
+                        onLoad={() => setLoadedImage(true)}
+                    />
+                </div>
+                
+                <div className={styles.types}>
+                    {data.types.map((t) => (
+                    <span key={t.type.name} className={`${styles.type} ${styles[t.type.name]}`}>{t.type.name}</span>
+                ))}
+                </div>
+            </Link>
         </li>
     )
 };
