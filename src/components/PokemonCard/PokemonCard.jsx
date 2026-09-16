@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useGetPokemonByIdQuery } from '../../services/pokemonApi';
 import styles from "./PokemonCard.module.css";
 import { PokemonCardSkeleton } from "./PokemonCardSkeleton";
+import { FavoriteButton } from '../FavoriteButton/FavoriteButton';
 
 export const PokemonCard = ({pokemon}) => {
     const [ loadedImage, setLoadedImage ] = useState(false);
@@ -39,6 +40,7 @@ export const PokemonCard = ({pokemon}) => {
                 ))}
                 </div>
             </Link>
+            <FavoriteButton pokemonId={data.id} />
         </li>
     )
 };

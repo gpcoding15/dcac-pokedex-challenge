@@ -1,19 +1,16 @@
 import { useParams } from "react-router-dom";
 import { useGetPokemonByIdQuery } from "../../services/pokemonApi";
 import styles from "./PokemonDetail.module.css";
+import { FavoriteButton } from "../../components/FavoriteButton/FavoriteButton";
 
 export const PokemonDetail = () => {
     const { id } = useParams();
     const { data, isLoading, error } = useGetPokemonByIdQuery(id);
 
+    const alternateSprites = [ data.sprites.back_default, data.sprites.front_shiny, data.sprites.back_shiny].filter(Boolean);
+
     if (isLoading) return <p>Loading Pokemon</p>
     if (error) return <p>Error loading Pokemon</p>
-
-    const alternateSprites = [
-        data.sprites.back_default,
-        data.sprites.front_shiny,
-        data.sprites.back_shiny,
-    ].filter(Boolean);
 
     return (
         <div className={styles.container}>
@@ -21,6 +18,8 @@ export const PokemonDetail = () => {
                 <h1>{data.name}</h1>
                 <p>#{data.id}</p>
             </header>
+
+            <FavoriteButton pokemonId={data.id}/>
 
             <section className={styles.section}>
                 <h2 className={styles.sprites}>Sprites</h2>
