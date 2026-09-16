@@ -1,16 +1,10 @@
 import { useState } from "react";
 import { Formik, Form } from "formik";
-import * as Yup from "yup";
 import { useGetPokemonsDataQuery, useGetPokemonByIdQuery } from "../../services/pokemonApi";
 import { PokemonSelector } from "../../components/PokemonSelector/PokemonSelector";
 import { ComparisonCard } from "../../components/ComparisonCard/ComparisonCard";
 import styles from "./Compare.module.css";
-
-const comparisonSchema = Yup.object({
-    pokemon1: Yup.string().required("Select the first Pokémon"),
-
-    pokemon2: Yup.string().required("Select the second Pokémon").notOneOf([Yup.ref("pokemon1")], "Choose two different Pokémon")
-});
+import { comparisonSchema } from "./comparisonSchema";
 
 export const Compare = () => {
     const [selectedPokemons, setSelectedPokemons] = useState({ pokemon1: "", pokemon2: ""});
