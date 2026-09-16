@@ -20,7 +20,7 @@ export const Home = () => {
     const loadMoreRef = useRef(null);
     const debouncedSearch = useDebounce(search, 300);
 
-    const { data, fetchNextPage, hasNextPage, isFetchingNextPage, } = useGetPokemonsInfiniteQuery();
+    const { data, fetchNextPage, hasNextPage, isFetchingNextPage, error, refetch } = useGetPokemonsInfiniteQuery();
 
     const { data: allPokemonsData } = useGetPokemonsDataQuery();
     const { data: typesData } = useGetTypesQuery();
@@ -84,6 +84,17 @@ export const Home = () => {
             return matchesSearch && matchesType && matchesGeneration;
         }) ?? []: pokemons;
 
+    if (error && !data) {
+        return (
+            <div>
+                <p>Unable to load Pokémon. Please check your connection.</p>
+
+                <button onClick={refetch}>
+                    Retry
+                </button>
+            </div>
+        );
+    };
 
     return(
         <>
@@ -97,10 +108,13 @@ export const Home = () => {
             <option value="">Generations</option>
             {generationsData?.results.slice(0,9).map((generation, index) => <option key={generation.name} value={index + 1}>Generation {index + 1}</option>)}
         </select>
+        {hasActiveFilters && filteredPokemons.length === 0 && (
+            <p>No Pokémon found matches your search.</p>
+        )}
         <ul>
             {filteredPokemons.map((pokemon) => <PokemonCard pokemon={pokemon} key={pokemon.name} />)}
         </ul>
-        {hasActiveFilters && (
+        {!hasActiveFilters && (
             <div ref={loadMoreRef}>
                 {isFetchingNextPage && <p>Loading more Pokemons...</p>}
             </div>

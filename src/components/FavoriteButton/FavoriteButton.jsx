@@ -1,18 +1,39 @@
 import PropTypes from "prop-types";
+import { useEffect, useState } from "react";
 import { useFavorites } from "../../hooks/useFavorites";
 
 export const FavoriteButton = ({ pokemonId }) => {
+    const [showLimitMessage, setShowLimitMessage] = useState(false);
     const { isFavorite, toggleFavorite, isFull } = useFavorites();
 
     const favorite = isFavorite(pokemonId);
 
+    const handleClick = () => {
+        if (!favorite && isFull) {
+            setShowLimitMessage(true);
+            return;
+        }
+
+        toggleFavorite(pokemonId);
+    };
+
+    useEffect(() => {
+        if (!showLimitMessage) return;
+
+        const timeout = setTimeout(() => {
+            setShowLimitMessage(false);
+        }, 2500);
+
+        return () => clearTimeout(timeout);
+    }, [showLimitMessage]);
+
     return (
         <div>
-            <button onClick={() => toggleFavorite(pokemonId)}>
+            <button onClick={handleClick}>
                 {favorite ? "Remove from favorites" : "Add to favorites"}
             </button>
 
-            {isFull && !favorite && (<p>Maximum of 6 favorites reached</p>)}
+            {showLimitMessage && (<p>Maximum of 6 favorites reached</p>)}
         </div>
         );
 };

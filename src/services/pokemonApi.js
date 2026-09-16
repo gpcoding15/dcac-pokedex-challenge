@@ -2,9 +2,16 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const pokemonApi = createApi({
     reducerPath: "pokemonApi",
+
     baseQuery: fetchBaseQuery({
         baseUrl: "https://pokeapi.co/api/v2/",
     }),
+
+    keepUnusedDataFor: 60,
+
+    refetchOnReconnect: true,
+
+    tagTypes: ["Pokemon", "Type", "Generation"],
 
     endpoints: (builder) => ({
         getPokemons: builder.infiniteQuery({
@@ -23,27 +30,35 @@ export const pokemonApi = createApi({
 
             query: ({ pageParam }) =>
                 `pokemon?offset=${pageParam}&limit=20`,
+
+            providesTags: [{ type: "Pokemon", id: "LIST" }]
         }),
         getPokemonById: builder.query({
-            query: (id) => `pokemon/${id}`
+            query: (id) => `pokemon/${id}`,
+            providesTags: (result, error, id) => [{ type: "Pokemon", id }]
         }),
         getPokemonsData: builder.query({
-            query: () => "pokemon?limit=2000"
+            query: () => "pokemon?limit=2000",
+            providesTags: [{ type: "Pokemon", id: "LIST" }]
         }),
         getTypes: builder.query({
             query: () => "type",
+            providesTags: ["Type"]
         }),
 
         getPokemonByType: builder.query({
             query: (type) => `type/${type}`,
+            providesTags: ["Type"]
         }),
 
         getGenerations: builder.query({
             query: () => "generation",
+            providesTags: ["Generation"]
         }),
 
         getGenerationById: builder.query({
             query: (id) => `generation/${id}`,
+            providesTags: ["Generation"]
         })
     })
 });
