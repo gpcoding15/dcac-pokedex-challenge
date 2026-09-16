@@ -26,8 +26,34 @@ export const pokemonApi = createApi({
         }),
         getPokemonById: builder.query({
             query: (id) => `pokemon/${id}`
+        }),
+        getPokemonsData: builder.query({
+            query: () => "pokemon?limit=2000"
+        }),
+        getTypes: builder.query({
+            query: () => "type",
+        }),
+
+        getPokemonByType: builder.query({
+            query: (type) => `type/${type}`,
+        }),
+
+        getGenerations: builder.query({
+            query: () => "generation",
+        }),
+
+        getGenerationById: builder.query({
+            query: (id) => `generation/${id}`,
         })
-    }),
+    })
 });
 
-export const { useGetPokemonsInfiniteQuery, useGetPokemonByIdQuery } = pokemonApi;
+export const { 
+    useGetPokemonsInfiniteQuery, 
+    useGetPokemonByIdQuery,
+    useGetPokemonsDataQuery,
+    useGetTypesQuery,
+    useGetPokemonByTypeQuery,
+    useGetGenerationsQuery,
+    useGetGenerationByIdQuery
+} = pokemonApi;
