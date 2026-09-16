@@ -1,0 +1,41 @@
+.card {
+    padding: 24px;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+}
+
+.name {
+    text-transform: capitalize;
+    text-align: center;
+}
+
+.image {
+    display: block;
+    width: 150px;
+    margin: 0 auto;
+}
+
+.types {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.type {
+    padding: 4px 10px;
+    border-radius: 12px;
+    background: #ddd;
+    text-transform: capitalize;
+}
+
+.stat {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 8px;
+}
+
+.statName {
+    text-transform: capitalize;
+}
