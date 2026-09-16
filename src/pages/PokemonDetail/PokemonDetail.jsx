@@ -9,17 +9,19 @@ export const PokemonDetail = () => {
 
     const alternateSprites = [ data.sprites.back_default, data.sprites.front_shiny, data.sprites.back_shiny].filter(Boolean);
 
-    if (isLoading) return <p>Loading Pokemon</p>
-    if (error) return <p>Error loading Pokemon</p>
+    if (isLoading) return <p className={styles.status}>Loading Pokemon</p>
+    if (error) return <p className={styles.status}>Error loading Pokemon</p>
 
     return (
         <div className={styles.container}>
             <header className={styles.header}>
-                <h1>{data.name}</h1>
-                <p>#{data.id}</p>
-            </header>
+                <div>
+                    <p className={styles.number}>#{data.id}</p>
+                    <h1 className={styles.name}>{data.name}</h1>
+                </div>
 
-            <FavoriteButton pokemonId={data.id}/>
+                <FavoriteButton pokemonId={data.id}/>
+            </header>
 
             <section className={styles.section}>
                 <h2 className={styles.sprites}>Sprites</h2>
@@ -28,7 +30,7 @@ export const PokemonDetail = () => {
                     alt={data.name}
                     className={styles.mainSprite}
                 />
-                <div>
+                <div className={styles.alternateSprites}>
                     {alternateSprites.map((sprite, index) => (
                         <img
                             key={sprite}
@@ -41,23 +43,25 @@ export const PokemonDetail = () => {
             </section>
 
             <section className={styles.section}>
-                <h2 className={styles.info}>Information</h2>
+                <h2>Information</h2>
 
-                <p>Height: {data.height / 10} m</p>
-                <p>Weight: {data.weight / 10} kg</p>
+                <div className={styles.info}>
+                    <p>Height: {data.height / 10} m</p>
+                    <p>Weight: {data.weight / 10} kg</p>
+                </div>
             </section>
 
             <section className={styles.section}>
                 <h2>Types</h2>
-                
+
                 <div className={styles.badges}>
                      {data.types.map((type) => (
-                    <span key={type.type.name} className={styles.badge}>
+                    <span key={type.type.name} className={`${styles.typeBadge} ${styles[type.type.name]}`}>
                         {type.type.name}
                     </span>
                 ))}
                 </div>
-               
+
             </section>
 
             <section className={styles.section}>

@@ -21,7 +21,7 @@ export const Compare = () => {
 
     return (
         <main className={styles.container}>
-            <h1>Compare Pokémon</h1>
+            <h1 className={styles.title}>Compare Pokémon</h1>
 
             <Formik
                 initialValues={{ pokemon1: "", pokemon2: ""}}
@@ -41,13 +41,13 @@ export const Compare = () => {
                         ))}
                     </datalist>
 
-                    <button type="submit">
+                    <button type="submit" className={styles.submitButton}>
                         Compare
                     </button>
                 </Form>
             </Formik>
 
-            {(isPokemon1Loading || isPokemon2Loading) && (<p>Loading comparison...</p>)}
+            {(isPokemon1Loading || isPokemon2Loading) && (<p className={styles.loadingText}>Loading comparison...</p>)}
             {pokemon1Data && pokemon2Data && (
                 <div className={styles.comparison}>
                     <ComparisonCard pokemon={pokemon1Data}/>

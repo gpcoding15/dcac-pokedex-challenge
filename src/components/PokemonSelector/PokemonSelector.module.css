@@ -1,0 +1,24 @@
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1 1 220px;
+}
+
+.label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+}
+
+.input {
+    width: 100%;
+    text-transform: capitalize;
+}
+
+.error {
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--color-danger);
+    font-weight: 600;
+}

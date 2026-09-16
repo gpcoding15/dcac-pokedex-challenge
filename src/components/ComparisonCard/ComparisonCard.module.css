@@ -1,41 +1,69 @@
 .card {
     padding: 24px;
-    border: 1px solid #ccc;
-    border-radius: 12px;
+    background-color: var(--color-surface);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
 }
 
 .name {
     text-transform: capitalize;
     text-align: center;
+    font-size: 1.3rem;
 }
 
 .image {
     display: block;
     width: 150px;
-    margin: 0 auto;
+    margin: 8px auto 0;
 }
 
 .types {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
     gap: 8px;
     margin-bottom: 20px;
 }
 
 .type {
-    padding: 4px 10px;
-    border-radius: 12px;
-    background: #ddd;
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: #999;
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 600;
     text-transform: capitalize;
 }
+
+.normal { background-color: var(--type-normal); }
+.fire { background-color: var(--type-fire); }
+.water { background-color: var(--type-water); }
+.electric { background-color: var(--type-electric); }
+.grass { background-color: var(--type-grass); }
+.ice { background-color: var(--type-ice); }
+.fighting { background-color: var(--type-fighting); }
+.poison { background-color: var(--type-poison); }
+.ground { background-color: var(--type-ground); }
+.flying { background-color: var(--type-flying); }
+.psychic { background-color: var(--type-psychic); }
+.bug { background-color: var(--type-bug); }
+.rock { background-color: var(--type-rock); }
+.ghost { background-color: var(--type-ghost); }
+.dragon { background-color: var(--type-dragon); }
+.dark { background-color: var(--type-dark); }
+.steel { background-color: var(--type-steel); }
+.fairy { background-color: var(--type-fairy); }
 
 .stat {
     display: flex;
     justify-content: space-between;
     gap: 16px;
     margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--color-border);
 }
 
 .statName {
     text-transform: capitalize;
+    color: var(--color-text-muted);
 }

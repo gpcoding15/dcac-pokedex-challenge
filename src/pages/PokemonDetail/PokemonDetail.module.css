@@ -1,52 +1,128 @@
 .container {
     max-width: 900px;
     margin: 0 auto;
-    padding: 32px 20px;
+    padding: 32px 20px 48px;
+}
+
+.status {
+    padding: 48px 16px;
+    text-align: center;
+    color: var(--color-text-muted);
 }
 
 .header {
-    margin-bottom: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+}
+
+.number {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-weight: 600;
+}
+
+.name {
+    margin: 2px 0 0;
+    text-transform: capitalize;
+    font-size: 2rem;
 }
 
 .section {
-    margin-bottom: 32px;
+    margin-bottom: 20px;
+    background-color: var(--color-surface);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    padding: 24px;
 }
 
 .sprites {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 16px;
+    margin-bottom: 16px;
 }
 
 .mainSprite {
+    display: block;
     width: 180px;
     height: 180px;
     object-fit: contain;
+    margin: 0 auto;
+}
+
+.alternateSprites {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 12px;
+}
+
+.sprite {
+    width: 90px;
+    height: 90px;
+    object-fit: contain;
+    background-color: var(--color-bg);
+    border-radius: var(--radius-sm);
 }
 
 .info {
     display: flex;
     gap: 32px;
+    margin-top: 12px;
+    flex-wrap: wrap;
 }
 
 .badges {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
+    margin-top: 12px;
 }
 
 .badge {
-    padding: 6px 12px;
-    border-radius: 16px;
-    background-color: #e5e5e5;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background-color: var(--color-bg);
     text-transform: capitalize;
+    font-weight: 600;
+    font-size: 0.9rem;
 }
+
+.typeBadge {
+    padding: 6px 16px;
+    border-radius: 999px;
+    text-transform: capitalize;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #fff;
+}
+
+.normal { background-color: var(--type-normal); }
+.fire { background-color: var(--type-fire); }
+.water { background-color: var(--type-water); }
+.electric { background-color: var(--type-electric); }
+.grass { background-color: var(--type-grass); }
+.ice { background-color: var(--type-ice); }
+.fighting { background-color: var(--type-fighting); }
+.poison { background-color: var(--type-poison); }
+.ground { background-color: var(--type-ground); }
+.flying { background-color: var(--type-flying); }
+.psychic { background-color: var(--type-psychic); }
+.bug { background-color: var(--type-bug); }
+.rock { background-color: var(--type-rock); }
+.ghost { background-color: var(--type-ghost); }
+.dragon { background-color: var(--type-dragon); }
+.dark { background-color: var(--type-dark); }
+.steel { background-color: var(--type-steel); }
+.fairy { background-color: var(--type-fairy); }
 
 .stats {
     display: flex;
     flex-direction: column;
     gap: 14px;
+    margin-top: 12px;
 }
 
 .stat {
@@ -58,18 +134,38 @@
     justify-content: space-between;
     margin-bottom: 6px;
     text-transform: capitalize;
+    font-weight: 600;
 }
 
 .statTrack {
     width: 100%;
     height: 10px;
-    background-color: #e5e5e5;
+    background-color: var(--color-bg);
     border-radius: 5px;
     overflow: hidden;
 }
 
 .statBar {
     height: 100%;
-    background-color: #555;
+    background-color: var(--color-primary);
     border-radius: 5px;
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 20px 16px 32px;
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .section {
+        padding: 16px;
+    }
+
+    .info {
+        gap: 16px;
+    }
 }

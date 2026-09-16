@@ -1,15 +1,33 @@
 .container {
     max-width: 1000px;
     margin: 0 auto;
-    padding: 24px;
+    padding: 32px 24px 48px;
+}
+
+.title {
+    margin-bottom: 24px;
 }
 
 .form {
     display: flex;
     gap: 16px;
-    align-items: flex-end;
+    align-items: flex-start;
     flex-wrap: wrap;
     margin-bottom: 32px;
+    background-color: var(--color-surface);
+    padding: 20px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+}
+
+.submitButton {
+    align-self: flex-end;
+}
+
+.loadingText {
+    color: var(--color-text-muted);
+    font-weight: 600;
+    margin-bottom: 16px;
 }
 
 .comparison {
@@ -21,5 +39,10 @@
 @media (max-width: 700px) {
     .comparison {
         grid-template-columns: 1fr;
+    }
+
+    .submitButton {
+        align-self: stretch;
+        width: 100%;
     }
 }

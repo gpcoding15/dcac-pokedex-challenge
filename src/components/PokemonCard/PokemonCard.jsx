@@ -22,7 +22,7 @@ export const PokemonCard = ({pokemon}) => {
                 <p className={styles.name}>{pokemon.name}</p>
                 <div className={styles.imageContainer}>
                     {!loadedImage && (
-                        <div className={styles.ImagePlaceholder}></div>
+                        <div className={styles.imagePlaceholder}></div>
                     )}
                     <img
                         src={data.sprites.front_default} 

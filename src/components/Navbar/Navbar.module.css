@@ -1,0 +1,114 @@
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+}
+
+.inner {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 14px 24px;
+    flex-wrap: wrap;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--color-text);
+}
+
+.brand:hover {
+    color: var(--color-primary);
+}
+
+.pokeball {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: linear-gradient(var(--color-primary) 48%, #1a1a1a 48%, #1a1a1a 52%, #fff 52%);
+    border: 2px solid #1a1a1a;
+    position: relative;
+}
+
+.pokeball::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2px solid #1a1a1a;
+    transform: translate(-50%, -50%);
+}
+
+.links {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.link {
+    padding: 6px 14px;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    color: var(--color-text-muted);
+}
+
+.link:hover {
+    color: var(--color-text);
+    background-color: var(--color-bg);
+}
+
+.activeLink {
+    color: var(--color-primary);
+    background-color: var(--color-danger-bg);
+}
+
+.status {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+}
+
+.statusDot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--color-text-muted);
+}
+
+.online .statusDot {
+    background-color: #2fa84f;
+}
+
+.offline .statusDot {
+    background-color: var(--color-danger);
+}
+
+@media (max-width: 600px) {
+    .inner {
+        padding: 12px 16px;
+        gap: 12px;
+    }
+
+    .status {
+        margin-left: 0;
+        width: 100%;
+        order: 3;
+    }
+}

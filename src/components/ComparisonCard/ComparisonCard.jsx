@@ -8,7 +8,7 @@ export const ComparisonCard = ({ pokemon }) => {
             <img src={pokemon.sprites.front_default} alt={pokemon.name} className={styles.image}/>
             <div className={styles.types}>
                 {pokemon.types.map((type) => (
-                    <span key={type.type.name} className={styles.type}>
+                    <span key={type.type.name} className={`${styles.type} ${styles[type.type.name]}`}>
                         {type.type.name}
                     </span>
                 ))}

@@ -1,0 +1,39 @@
+.wrapper {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    font-size: 0.85rem;
+}
+
+.button:hover {
+    background-color: var(--color-danger-bg);
+    color: var(--color-primary);
+}
+
+.active {
+    background-color: var(--color-danger-bg);
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.heart {
+    font-size: 1rem;
+    line-height: 1;
+    color: var(--color-primary);
+}
+
+.limitMessage {
+    font-size: 0.8rem;
+    color: var(--color-danger);
+    font-weight: 600;
+}

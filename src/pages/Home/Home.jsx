@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { 
+import {
     useGetPokemonsInfiniteQuery,
     useGetPokemonsDataQuery,
     useGetTypesQuery,
@@ -10,6 +10,7 @@ import {
 } from "../../services/pokemonApi";
 import { PokemonCard } from "../../components/PokemonCard/PokemonCard";
 import { useDebounce } from "../../hooks/useDebounce";
+import styles from "./Home.module.css";
 
 export const Home = () => {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -86,7 +87,7 @@ export const Home = () => {
 
     if (error && !data) {
         return (
-            <div>
+            <div className={styles.errorState}>
                 <p>Unable to load Pokémon. Please check your connection.</p>
 
                 <button onClick={refetch}>
@@ -97,29 +98,37 @@ export const Home = () => {
     };
 
     return(
-        <>
-        <input type="search" placeholder="Search Pokemon" value={search} onChange={(event) => setSearch(event.target.value)} />
-        <select value={selectedType} onChange={(event) => setSelectedType(event.target.value)}>
-            <option value="">Types</option>
-            {typesData?.results.map((type) => <option key={type.name} value={type.name}>{type.name.charAt(0).toUpperCase() + type.name.slice(1)}</option>)}
-        </select>
+        <div className={styles.page}>
+        <div className={styles.filters}>
+            <input
+                type="search"
+                className={styles.search}
+                placeholder="Search Pokemon"
+                value={search}
+                onChange={(event) => setSearch(event.target.value)}
+            />
+            <select className={styles.select} value={selectedType} onChange={(event) => setSelectedType(event.target.value)}>
+                <option value="">Types</option>
+                {typesData?.results.map((type) => <option key={type.name} value={type.name}>{type.name.charAt(0).toUpperCase() + type.name.slice(1)}</option>)}
+            </select>
 
-        <select value={selectedGeneration} onChange={(event) => setSelectedGeneration(event.target.value)}>
-            <option value="">Generations</option>
-            {generationsData?.results.slice(0,9).map((generation, index) => <option key={generation.name} value={index + 1}>Generation {index + 1}</option>)}
-        </select>
+            <select className={styles.select} value={selectedGeneration} onChange={(event) => setSelectedGeneration(event.target.value)}>
+                <option value="">Generations</option>
+                {generationsData?.results.slice(0,9).map((generation, index) => <option key={generation.name} value={index + 1}>Generation {index + 1}</option>)}
+            </select>
+        </div>
         {hasActiveFilters && filteredPokemons.length === 0 && (
-            <p>No Pokémon found matches your search.</p>
+            <p className={styles.empty}>No Pokémon found matches your search.</p>
         )}
-        <ul>
+        <ul className={styles.grid}>
             {filteredPokemons.map((pokemon) => <PokemonCard pokemon={pokemon} key={pokemon.name} />)}
         </ul>
         {!hasActiveFilters && (
-            <div ref={loadMoreRef}>
-                {isFetchingNextPage && <p>Loading more Pokemons...</p>}
+            <div ref={loadMoreRef} className={styles.loadMore}>
+                {isFetchingNextPage && <p className={styles.loadingText}>Loading more Pokemons...</p>}
             </div>
         )}
-        </>
+        </div>
 
-    ) 
+    )
  };
