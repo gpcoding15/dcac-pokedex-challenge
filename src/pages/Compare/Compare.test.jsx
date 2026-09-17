@@ -138,4 +138,65 @@ describe("Compare", () => {
 
         expect(() => render(<Compare />)).not.toThrow();
     });
+
+    it("should show a not-found message when the first pokemon does not exist", async () => {
+        useGetPokemonByIdQuery.mockImplementation((name) => {
+            if (name === "zzz") return { data: undefined, isLoading: false, error: { status: 404 } };
+            return { data: undefined, isLoading: false };
+        });
+        const user = userEvent.setup();
+        render(<Compare />);
+
+        await user.type(screen.getByLabelText("First Pokémon"), "zzz");
+        await user.type(screen.getByLabelText("Second Pokémon"), "bulbasaur");
+        await user.click(screen.getByRole("button", { name: /compare/i }));
+
+        expect(await screen.findByText(/couldn't find "zzz"/i)).toBeInTheDocument();
+    });
+
+    it("should not show the loading text once the not-found pokemon has finished failing", async () => {
+        useGetPokemonByIdQuery.mockImplementation((name) => {
+            if (name === "zzz") return { data: undefined, isLoading: false, error: { status: 404 } };
+            return { data: undefined, isLoading: false };
+        });
+        const user = userEvent.setup();
+        render(<Compare />);
+
+        await user.type(screen.getByLabelText("First Pokémon"), "zzz");
+        await user.type(screen.getByLabelText("Second Pokémon"), "bulbasaur");
+        await user.click(screen.getByRole("button", { name: /compare/i }));
+        await screen.findByText(/couldn't find "zzz"/i);
+
+        expect(screen.queryByText(/loading comparison/i)).not.toBeInTheDocument();
+    });
+
+    it("should show a not-found message for each pokemon that does not exist", async () => {
+        useGetPokemonByIdQuery.mockReturnValue({ data: undefined, isLoading: false, error: { status: 404 } });
+        const user = userEvent.setup();
+        render(<Compare />);
+
+        await user.type(screen.getByLabelText("First Pokémon"), "zzz");
+        await user.type(screen.getByLabelText("Second Pokémon"), "yyy");
+        await user.click(screen.getByRole("button", { name: /compare/i }));
+
+        expect(await screen.findByText(/couldn't find "zzz"/i)).toBeInTheDocument();
+        expect(screen.getByText(/couldn't find "yyy"/i)).toBeInTheDocument();
+    });
+
+    it("should not show a not-found message when both pokemon are valid", async () => {
+        useGetPokemonByIdQuery.mockImplementation((name) => {
+            if (name === "pikachu") return { data: { name: "pikachu" }, isLoading: false };
+            if (name === "bulbasaur") return { data: { name: "bulbasaur" }, isLoading: false };
+            return { data: undefined, isLoading: false };
+        });
+        const user = userEvent.setup();
+        render(<Compare />);
+
+        await user.type(screen.getByLabelText("First Pokémon"), "pikachu");
+        await user.type(screen.getByLabelText("Second Pokémon"), "bulbasaur");
+        await user.click(screen.getByRole("button", { name: /compare/i }));
+
+        await screen.findAllByTestId("comparison-card");
+        expect(screen.queryByText(/couldn't find/i)).not.toBeInTheDocument();
+    });
 });
