@@ -1,5 +1,29 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
+export const getPokemonsNextPageParam = (lastPage) => {
+    if (!lastPage.next) {
+        return undefined;
+    }
+
+    const nextUrl = new URL(lastPage.next);
+    return Number(nextUrl.searchParams.get("offset"));
+};
+
+export const getPokemonsQueryUrl = ({ pageParam }) =>
+    `pokemon?offset=${pageParam}&limit=20`;
+
+export const getPokemonByIdQueryUrl = (id) => `pokemon/${id}`;
+
+export const getPokemonsDataQueryUrl = () => "pokemon?limit=2000";
+
+export const getTypesQueryUrl = () => "type";
+
+export const getPokemonByTypeQueryUrl = (type) => `type/${type}`;
+
+export const getGenerationsQueryUrl = () => "generation";
+
+export const getGenerationByIdQueryUrl = (id) => `generation/${id}`;
+
 export const pokemonApi = createApi({
     reducerPath: "pokemonApi",
 
@@ -17,54 +41,45 @@ export const pokemonApi = createApi({
         getPokemons: builder.infiniteQuery({
             infiniteQueryOptions: {
                 initialPageParam: 0,
-
-                getNextPageParam: (lastPage) => {
-                    if (!lastPage.next) {
-                        return undefined;
-                    }
-
-                    const nextUrl = new URL(lastPage.next);
-                    return Number(nextUrl.searchParams.get("offset"));
-                },
+                getNextPageParam: getPokemonsNextPageParam,
             },
 
-            query: ({ pageParam }) =>
-                `pokemon?offset=${pageParam}&limit=20`,
+            query: getPokemonsQueryUrl,
 
             providesTags: [{ type: "Pokemon", id: "LIST" }]
         }),
         getPokemonById: builder.query({
-            query: (id) => `pokemon/${id}`,
+            query: getPokemonByIdQueryUrl,
             providesTags: (result, error, id) => [{ type: "Pokemon", id }]
         }),
         getPokemonsData: builder.query({
-            query: () => "pokemon?limit=2000",
+            query: getPokemonsDataQueryUrl,
             providesTags: [{ type: "Pokemon", id: "LIST" }]
         }),
         getTypes: builder.query({
-            query: () => "type",
+            query: getTypesQueryUrl,
             providesTags: ["Type"]
         }),
 
         getPokemonByType: builder.query({
-            query: (type) => `type/${type}`,
+            query: getPokemonByTypeQueryUrl,
             providesTags: ["Type"]
         }),
 
         getGenerations: builder.query({
-            query: () => "generation",
+            query: getGenerationsQueryUrl,
             providesTags: ["Generation"]
         }),
 
         getGenerationById: builder.query({
-            query: (id) => `generation/${id}`,
+            query: getGenerationByIdQueryUrl,
             providesTags: ["Generation"]
         })
     })
 });
 
-export const { 
-    useGetPokemonsInfiniteQuery, 
+export const {
+    useGetPokemonsInfiniteQuery,
     useGetPokemonByIdQuery,
     useGetPokemonsDataQuery,
     useGetTypesQuery,

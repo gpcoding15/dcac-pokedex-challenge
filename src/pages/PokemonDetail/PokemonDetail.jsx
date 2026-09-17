@@ -7,10 +7,10 @@ export const PokemonDetail = () => {
     const { id } = useParams();
     const { data, isLoading, error } = useGetPokemonByIdQuery(id);
 
-    const alternateSprites = [ data.sprites.back_default, data.sprites.front_shiny, data.sprites.back_shiny].filter(Boolean);
-
     if (isLoading) return <p className={styles.status}>Loading Pokemon</p>
     if (error) return <p className={styles.status}>Error loading Pokemon</p>
+
+    const alternateSprites = [ data.sprites.back_default, data.sprites.front_shiny, data.sprites.back_shiny].filter(Boolean);
 
     return (
         <div className={styles.container}>
@@ -98,6 +98,7 @@ export const PokemonDetail = () => {
                             <div className={styles.statTrack}>
                                 <div
                                     className={styles.statBar}
+                                    data-testid="stat-bar"
                                     style={{
                                         width: `${percentage}%`
                                     }}

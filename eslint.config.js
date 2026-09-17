@@ -36,9 +36,14 @@ export default [
     },
   },
   {
-    files: ['**/*.test.{js,jsx}'],
+    files: ['**/*.test.{js,jsx}', 'src/setupTests.js'],
     languageOptions: {
-      globals: globals.jest,
+      globals: { ...globals.jest, ...globals.node },
+    },
+    rules: {
+      // Test files often declare small inline mock components; requiring
+      // propTypes for those adds noise without catching real bugs.
+      'react/prop-types': 'off',
     },
   },
 ]
