@@ -2,8 +2,8 @@ const STAT_LABELS = {
     hp: "HP",
     attack: "Attack",
     defense: "Defense",
-    "special-attack": "Sp. Atk",
-    "special-defense": "Sp. Def",
+    "special-attack": "Special Attack",
+    "special-defense": "Special Defense",
     speed: "Speed",
 };
 

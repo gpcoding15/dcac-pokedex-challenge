@@ -14,8 +14,8 @@ describe("buildStatsChartData", () => {
             "HP",
             "Attack",
             "Defense",
-            "Sp. Atk",
-            "Sp. Def",
+            "Special Attack",
+            "Special Defense",
             "Speed",
         ]);
     });
