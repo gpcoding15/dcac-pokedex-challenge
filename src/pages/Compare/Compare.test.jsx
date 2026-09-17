@@ -87,7 +87,7 @@ describe("Compare", () => {
         expect(screen.queryByRole("heading", { name: /stats comparison/i })).not.toBeInTheDocument();
     });
 
-    it("should show the base stats range under the chart title", async () => {
+    it("should show a caption clarifying the chart shows base stats", async () => {
         useGetPokemonByIdQuery.mockImplementation((name) => {
             if (name === "pikachu") return { data: buildPokemon("pikachu"), isLoading: false };
             if (name === "bulbasaur") return { data: buildPokemon("bulbasaur"), isLoading: false };
@@ -100,7 +100,7 @@ describe("Compare", () => {
         await user.type(screen.getByLabelText("Second Pokémon"), "bulbasaur");
         await user.click(screen.getByRole("button", { name: /compare/i }));
 
-        expect(await screen.findByText("Base stats, 0–255")).toBeInTheDocument();
+        expect(await screen.findByText("Base stats")).toBeInTheDocument();
     });
 
     it("should give each comparison card a different accent color", async () => {

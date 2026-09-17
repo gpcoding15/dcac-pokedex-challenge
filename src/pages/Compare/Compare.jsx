@@ -71,13 +71,13 @@ export const Compare = () => {
 
                     <div className={styles.chart}>
                         <h2>Stats Comparison</h2>
-                        <p className={styles.chartCaption}>Base stats, 0–255</p>
+                        <p className={styles.chartCaption}>Base stats</p>
 
                         <ResponsiveContainer width="100%" height={400}>
                             <RadarChart data={chartData}>
                                 <PolarGrid />
                                 <PolarAngleAxis dataKey="stat" />
-                                <PolarRadiusAxis domain={[0, 255]} />
+                                <PolarRadiusAxis />
 
                                 <Radar
                                     name={pokemon1Data.name}
