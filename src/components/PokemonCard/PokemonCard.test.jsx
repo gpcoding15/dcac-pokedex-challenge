@@ -37,7 +37,7 @@ describe("PokemonCard", () => {
 
         renderPokemonCard();
 
-        expect(screen.getByText(/error loading pokemon/i)).toBeInTheDocument();
+        expect(screen.getByText(/error loading pokémon/i)).toBeInTheDocument();
     });
 
     it("should render the pokemon number and name once loaded", () => {

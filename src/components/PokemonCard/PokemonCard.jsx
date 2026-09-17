@@ -13,7 +13,7 @@ export const PokemonCard = ({pokemon}) => {
     const { data, isLoading, error } = useGetPokemonByIdQuery(id)
 
     if (isLoading) return <PokemonCardSkeleton/>
-    if (error) return <p>Error loading Pokemon</p>
+    if (error) return <p>Error loading Pokémon</p>
 
     return (
         <li className={styles.card}>

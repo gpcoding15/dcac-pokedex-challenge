@@ -13,13 +13,13 @@ const renderNavbar = () =>
     );
 
 describe("Navbar", () => {
-    it("should render links to Home, Favorites and Compare", () => {
+    it("should render links to Home, Team and Compare", () => {
         useOnlineStatus.mockReturnValue(true);
 
         renderNavbar();
 
         expect(screen.getByRole("link", { name: "Home" })).toBeInTheDocument();
-        expect(screen.getByRole("link", { name: "Favorites" })).toBeInTheDocument();
+        expect(screen.getByRole("link", { name: "Team" })).toBeInTheDocument();
         expect(screen.getByRole("link", { name: "Compare" })).toBeInTheDocument();
     });
 

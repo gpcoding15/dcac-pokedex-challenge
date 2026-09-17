@@ -105,7 +105,7 @@ describe("Home", () => {
         const user = userEvent.setup();
         render(<Home />);
 
-        await user.type(screen.getByPlaceholderText("Search Pokemon"), "pika");
+        await user.type(screen.getByPlaceholderText("Search Pokémon"), "pika");
 
         expect(screen.queryAllByTestId("pokemon-card")).toHaveLength(0);
     });
@@ -115,7 +115,7 @@ describe("Home", () => {
         const user = userEvent.setup();
         render(<Home />);
 
-        await user.type(screen.getByPlaceholderText("Search Pokemon"), "   ");
+        await user.type(screen.getByPlaceholderText("Search Pokémon"), "   ");
 
         expect(screen.queryByText("bulbasaur")).not.toBeInTheDocument();
     });
@@ -125,7 +125,7 @@ describe("Home", () => {
         const user = userEvent.setup();
         render(<Home />);
 
-        await user.type(screen.getByPlaceholderText("Search Pokemon"), "  pikachu  ");
+        await user.type(screen.getByPlaceholderText("Search Pokémon"), "  pikachu  ");
 
         expect(setSearchParams).toHaveBeenLastCalledWith({ search: "pikachu" });
     });
@@ -135,7 +135,7 @@ describe("Home", () => {
         const user = userEvent.setup();
         render(<Home />);
 
-        await user.type(screen.getByPlaceholderText("Search Pokemon"), "   ");
+        await user.type(screen.getByPlaceholderText("Search Pokémon"), "   ");
 
         expect(setSearchParams).toHaveBeenLastCalledWith({});
     });
@@ -145,7 +145,7 @@ describe("Home", () => {
         const user = userEvent.setup();
         render(<Home />);
 
-        await user.type(screen.getByPlaceholderText("Search Pokemon"), "  pika  ");
+        await user.type(screen.getByPlaceholderText("Search Pokémon"), "  pika  ");
 
         expect(screen.getByText("pikachu")).toBeInTheDocument();
         expect(screen.queryByText("bulbasaur")).not.toBeInTheDocument();
@@ -194,7 +194,7 @@ describe("Home", () => {
 
             render(<Home />);
 
-            expect(screen.getByPlaceholderText("Search Pokemon")).toHaveValue("pikachu");
+            expect(screen.getByPlaceholderText("Search Pokémon")).toHaveValue("pikachu");
         });
 
         it("should initialize the type select from the type url param", () => {
@@ -218,7 +218,7 @@ describe("Home", () => {
 
             render(<Home />);
 
-            expect(screen.getByPlaceholderText("Search Pokemon")).toHaveValue("");
+            expect(screen.getByPlaceholderText("Search Pokémon")).toHaveValue("");
         });
     });
 
@@ -265,7 +265,7 @@ describe("Home", () => {
         render(<Home />);
         const user = userEvent.setup();
 
-        await user.type(screen.getByPlaceholderText("Search Pokemon"), "pika");
+        await user.type(screen.getByPlaceholderText("Search Pokémon"), "pika");
 
         expect(screen.getByText("pikachu")).toBeInTheDocument();
         expect(screen.queryByText("bulbasaur")).not.toBeInTheDocument();
@@ -276,7 +276,7 @@ describe("Home", () => {
         render(<Home />);
         const user = userEvent.setup();
 
-        await user.type(screen.getByPlaceholderText("Search Pokemon"), "zzz");
+        await user.type(screen.getByPlaceholderText("Search Pokémon"), "zzz");
 
         expect(screen.getByText(/no pokémon found matches your search/i)).toBeInTheDocument();
     });
@@ -286,7 +286,7 @@ describe("Home", () => {
         render(<Home />);
         const user = userEvent.setup();
 
-        await user.type(screen.getByPlaceholderText("Search Pokemon"), "pika");
+        await user.type(screen.getByPlaceholderText("Search Pokémon"), "pika");
 
         expect(screen.queryByText(/no pokémon found matches your search/i)).not.toBeInTheDocument();
     });
@@ -345,7 +345,7 @@ describe("Home", () => {
             const user = userEvent.setup();
             render(<Home />);
 
-            await user.type(screen.getByPlaceholderText("Search Pokemon"), "pika");
+            await user.type(screen.getByPlaceholderText("Search Pokémon"), "pika");
 
             expect(setSearchParams).toHaveBeenLastCalledWith({ search: "pika" });
         });
@@ -434,9 +434,9 @@ describe("Home", () => {
             const user = userEvent.setup();
             render(<Home />);
 
-            await user.type(screen.getByPlaceholderText("Search Pokemon"), "pika");
+            await user.type(screen.getByPlaceholderText("Search Pokémon"), "pika");
 
-            expect(screen.queryByText(/loading more pokemons/i)).not.toBeInTheDocument();
+            expect(screen.queryByText(/loading more pokémons/i)).not.toBeInTheDocument();
         });
 
         it("should call fetchNextPage when the sentinel intersects and there is a next page", () => {
@@ -536,7 +536,7 @@ describe("Home", () => {
 
             render(<Home />);
 
-            expect(screen.getByText(/loading more pokemons/i)).toBeInTheDocument();
+            expect(screen.getByText(/loading more pokémons/i)).toBeInTheDocument();
         });
 
         it("should not show the loading text when not fetching the next page", () => {
@@ -544,7 +544,7 @@ describe("Home", () => {
 
             render(<Home />);
 
-            expect(screen.queryByText(/loading more pokemons/i)).not.toBeInTheDocument();
+            expect(screen.queryByText(/loading more pokémons/i)).not.toBeInTheDocument();
         });
     });
 });

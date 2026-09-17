@@ -7,8 +7,8 @@ export const PokemonDetail = () => {
     const { id } = useParams();
     const { data, isLoading, error } = useGetPokemonByIdQuery(id);
 
-    if (isLoading) return <p className={styles.status}>Loading Pokemon</p>
-    if (error) return <p className={styles.status}>Error loading Pokemon</p>
+    if (isLoading) return <p className={styles.status}>Loading Pokémon</p>
+    if (error) return <p className={styles.status}>Error loading Pokémon</p>
 
     const alternateSprites = [ data.sprites.back_default, data.sprites.front_shiny, data.sprites.back_shiny].filter(Boolean);
 

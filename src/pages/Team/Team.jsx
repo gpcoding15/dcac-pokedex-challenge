@@ -8,7 +8,7 @@ export const Team = () => {
     return (
         <main className={styles.page}>
             <header className={styles.header}>
-                <h1>Favorites</h1>
+                <h1>My Pokémon Team</h1>
                 <p className={styles.count}>{favoriteIds.length} / 6 Pokémon</p>
             </header>
 

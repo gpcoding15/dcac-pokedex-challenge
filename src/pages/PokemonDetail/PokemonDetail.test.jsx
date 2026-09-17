@@ -41,7 +41,7 @@ describe("PokemonDetail", () => {
 
         render(<PokemonDetail />);
 
-        expect(screen.getByText(/loading pokemon/i)).toBeInTheDocument();
+        expect(screen.getByText(/loading pokémon/i)).toBeInTheDocument();
     });
 
     it("should show an error message when the query fails", () => {
@@ -49,7 +49,7 @@ describe("PokemonDetail", () => {
 
         render(<PokemonDetail />);
 
-        expect(screen.getByText(/error loading pokemon/i)).toBeInTheDocument();
+        expect(screen.getByText(/error loading pokémon/i)).toBeInTheDocument();
     });
 
     it("should render the pokemon name and number once loaded", () => {

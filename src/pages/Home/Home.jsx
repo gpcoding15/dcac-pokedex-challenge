@@ -103,7 +103,7 @@ export const Home = () => {
             <input
                 type="search"
                 className={styles.search}
-                placeholder="Search Pokemon"
+                placeholder="Search Pokémon"
                 value={search}
                 onChange={(event) => setSearch(event.target.value)}
             />
@@ -125,7 +125,7 @@ export const Home = () => {
         </ul>
         {!hasActiveFilters && (
             <div ref={loadMoreRef} className={styles.loadMore}>
-                {isFetchingNextPage && <p className={styles.loadingText}>Loading more Pokemons...</p>}
+                {isFetchingNextPage && <p className={styles.loadingText}>Loading more Pokémons...</p>}
             </div>
         )}
         </div>

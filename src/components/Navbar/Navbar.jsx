@@ -18,7 +18,7 @@ export const Navbar = () => {
 
                 <div className={styles.links}>
                     <NavLink to="/" end className={linkClassName}>Home</NavLink>
-                    <NavLink to="/team" className={linkClassName}>Favorites</NavLink>
+                    <NavLink to="/team" className={linkClassName}>Team</NavLink>
                     <NavLink to="/compare" className={linkClassName}>Compare</NavLink>
                 </div>
 
