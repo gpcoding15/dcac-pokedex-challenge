@@ -98,10 +98,29 @@ Search uses a custom debounce hook with a 300ms delay.
 
 Type, generation and search values are synchronized with URL query parameters so the current search state can be preserved and shared.
 
+## Testing
+
+The project includes unit and component tests using Jest and React Testing Library.
+
+The test suite covers hooks, Redux logic, API utilities, components and pages.
+
+Mutation testing was also performed with Stryker to evaluate the effectiveness of the test suite and identify areas where assertions could be strengthened.
+
+Run the test suite with:
+
+```bash
+npm test
+```
+
+Run mutation testing with:
+
+```bash
+npm run test:mutation
+```
+
 ## Future Improvements
 
 - Persist a bounded subset of the RTK Query cache for stronger offline support
-- Add automated tests
 - Add drag and drop ordering to the favorites team
 - Add a chart to the Pokémon comparison
 - Improve accessibility
