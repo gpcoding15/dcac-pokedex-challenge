@@ -10,8 +10,9 @@ export const Compare = () => {
     const [selectedPokemons, setSelectedPokemons] = useState({ pokemon1: "", pokemon2: ""});
 
     const { data: allPokemonData } = useGetPokemonsDataQuery();
-    const { data: pokemon1Data, isLoading: isPokemon1Loading} = useGetPokemonByIdQuery(selectedPokemons.pokemon1,{ skip: !selectedPokemons.pokemon1});
-    const { data: pokemon2Data, isLoading: isPokemon2Loading,} = useGetPokemonByIdQuery(selectedPokemons.pokemon2, { skip: !selectedPokemons.pokemon2});
+    const pokemonNames = allPokemonData?.results.map((pokemon) => pokemon.name) ?? [];
+    const { data: pokemon1Data, isLoading: isPokemon1Loading, error: pokemon1Error } = useGetPokemonByIdQuery(selectedPokemons.pokemon1,{ skip: !selectedPokemons.pokemon1});
+    const { data: pokemon2Data, isLoading: isPokemon2Loading, error: pokemon2Error } = useGetPokemonByIdQuery(selectedPokemons.pokemon2, { skip: !selectedPokemons.pokemon2});
 
     return (
         <main className={styles.container}>
@@ -23,17 +24,8 @@ export const Compare = () => {
                 onSubmit={(values) => setSelectedPokemons(values)}
             >
                 <Form className={styles.form}>
-                    <PokemonSelector name="pokemon1" label="First Pokémon" />
-                    <PokemonSelector name="pokemon2" label="Second Pokémon" />
-
-                    <datalist id="pokemon-options">
-                        {allPokemonData?.results.map((pokemon) => (
-                            <option
-                                key={pokemon.name}
-                                value={pokemon.name}
-                            />
-                        ))}
-                    </datalist>
+                    <PokemonSelector name="pokemon1" label="First Pokémon" options={pokemonNames} />
+                    <PokemonSelector name="pokemon2" label="Second Pokémon" options={pokemonNames} />
 
                     <button type="submit" className={styles.submitButton}>
                         Compare
@@ -42,6 +34,16 @@ export const Compare = () => {
             </Formik>
 
             {(isPokemon1Loading || isPokemon2Loading) && (<p className={styles.loadingText}>Loading comparison...</p>)}
+            {pokemon1Error && (
+                <p className={styles.notFound}>
+                    Couldn&apos;t find &quot;{selectedPokemons.pokemon1}&quot;. Please pick a Pokémon from the suggestions.
+                </p>
+            )}
+            {pokemon2Error && (
+                <p className={styles.notFound}>
+                    Couldn&apos;t find &quot;{selectedPokemons.pokemon2}&quot;. Please pick a Pokémon from the suggestions.
+                </p>
+            )}
             {pokemon1Data && pokemon2Data && (
                 <div className={styles.comparison}>
                     <ComparisonCard pokemon={pokemon1Data}/>

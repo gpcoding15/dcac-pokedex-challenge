@@ -120,14 +120,17 @@ describe("Compare", () => {
         expect(screen.queryByTestId("comparison-card")).not.toBeInTheDocument();
     });
 
-    it("should render a datalist option for each available pokemon", () => {
+    it("should suggest every available pokemon when a selector is focused", async () => {
         useGetPokemonsDataQuery.mockReturnValue({
             data: { results: [{ name: "pikachu" }, { name: "bulbasaur" }] },
         });
+        const user = userEvent.setup();
+        render(<Compare />);
 
-        const { container } = render(<Compare />);
+        await user.click(screen.getByLabelText("First Pokémon"));
 
-        expect(container.querySelectorAll("#pokemon-options option")).toHaveLength(2);
+        expect(screen.getByText("pikachu")).toBeInTheDocument();
+        expect(screen.getByText("bulbasaur")).toBeInTheDocument();
     });
 
     it("should not crash while the full pokemon list is still loading", () => {

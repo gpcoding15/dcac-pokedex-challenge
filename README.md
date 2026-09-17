@@ -4,6 +4,10 @@ Pokédex web application built as a technical challenge using React and the Pok�
 
 The application allows users to browse Pokémon, search and filter them, view detailed information, manage a team of favorites, and compare two Pokémon.
 
+## Live Demo
+
+https://dcac-pokedex-challenge.vercel.app
+
 ## Tech Stack
 
 - React

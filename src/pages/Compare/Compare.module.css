@@ -30,6 +30,12 @@
     margin-bottom: 16px;
 }
 
+.notFound {
+    color: var(--color-danger);
+    font-weight: 600;
+    margin: 0 0 8px;
+}
+
 .comparison {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
