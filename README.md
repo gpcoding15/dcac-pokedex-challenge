@@ -117,7 +117,6 @@ Run the test suite with:
 ```bash
 npm test
 ```
-
 Run mutation testing with:
 
 ```bash
@@ -127,7 +126,7 @@ npm run test:mutation
 ## Future Improvements
 
 - Persist a bounded subset of the RTK Query cache for stronger offline support
-- Add drag and drop ordering to the favorites team
+- Add drag and drop ordering to the Pokémon team
 - Improve accessibility
 - Add additional UI animations and visual polish
 
