@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
 import styles from "./ComparisonCard.module.css";
 
-export const ComparisonCard = ({ pokemon }) => {
+export const ComparisonCard = ({ pokemon, accentColor }) => {
     return (
-        <div className={styles.card}>
+        <div className={styles.card} style={{ "--accent-color": accentColor }}>
             <h2 className={styles.name}>{pokemon.name}</h2>
             <img src={pokemon.sprites.front_default} alt={pokemon.name} className={styles.image}/>
             <div className={styles.types}>
@@ -27,4 +27,5 @@ export const ComparisonCard = ({ pokemon }) => {
 
 ComparisonCard.propTypes = {
     pokemon: PropTypes.object.isRequired,
+    accentColor: PropTypes.string,
 };

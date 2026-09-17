@@ -5,7 +5,9 @@ import { Compare } from "./Compare";
 
 jest.mock("../../services/pokemonApi");
 jest.mock("../../components/ComparisonCard/ComparisonCard", () => ({
-    ComparisonCard: ({ pokemon }) => <div data-testid="comparison-card">{pokemon.name}</div>,
+    ComparisonCard: ({ pokemon, accentColor }) => (
+        <div data-testid="comparison-card" data-accent-color={accentColor}>{pokemon.name}</div>
+    ),
 }));
 
 const buildPokemon = (name) => ({
@@ -61,6 +63,66 @@ describe("Compare", () => {
 
         const cards = await screen.findAllByTestId("comparison-card");
         expect(cards).toHaveLength(2);
+    });
+
+    it("should show the stats comparison chart once both pokemon are loaded", async () => {
+        useGetPokemonByIdQuery.mockImplementation((name) => {
+            if (name === "pikachu") return { data: buildPokemon("pikachu"), isLoading: false };
+            if (name === "bulbasaur") return { data: buildPokemon("bulbasaur"), isLoading: false };
+            return { data: undefined, isLoading: false };
+        });
+        const user = userEvent.setup();
+        render(<Compare />);
+
+        await user.type(screen.getByLabelText("First Pokémon"), "pikachu");
+        await user.type(screen.getByLabelText("Second Pokémon"), "bulbasaur");
+        await user.click(screen.getByRole("button", { name: /compare/i }));
+
+        expect(await screen.findByRole("heading", { name: /stats comparison/i })).toBeInTheDocument();
+    });
+
+    it("should not show the stats comparison chart before both pokemon are loaded", () => {
+        render(<Compare />);
+
+        expect(screen.queryByRole("heading", { name: /stats comparison/i })).not.toBeInTheDocument();
+    });
+
+    it("should show the base stats range under the chart title", async () => {
+        useGetPokemonByIdQuery.mockImplementation((name) => {
+            if (name === "pikachu") return { data: buildPokemon("pikachu"), isLoading: false };
+            if (name === "bulbasaur") return { data: buildPokemon("bulbasaur"), isLoading: false };
+            return { data: undefined, isLoading: false };
+        });
+        const user = userEvent.setup();
+        render(<Compare />);
+
+        await user.type(screen.getByLabelText("First Pokémon"), "pikachu");
+        await user.type(screen.getByLabelText("Second Pokémon"), "bulbasaur");
+        await user.click(screen.getByRole("button", { name: /compare/i }));
+
+        expect(await screen.findByText("Base stats, 0–255")).toBeInTheDocument();
+    });
+
+    it("should give each comparison card a different accent color", async () => {
+        useGetPokemonByIdQuery.mockImplementation((name) => {
+            if (name === "pikachu") return { data: buildPokemon("pikachu"), isLoading: false };
+            if (name === "bulbasaur") return { data: buildPokemon("bulbasaur"), isLoading: false };
+            return { data: undefined, isLoading: false };
+        });
+        const user = userEvent.setup();
+        render(<Compare />);
+
+        await user.type(screen.getByLabelText("First Pokémon"), "pikachu");
+        await user.type(screen.getByLabelText("Second Pokémon"), "bulbasaur");
+        await user.click(screen.getByRole("button", { name: /compare/i }));
+
+        const [card1, card2] = await screen.findAllByTestId("comparison-card");
+        const color1 = card1.dataset.accentColor;
+        const color2 = card2.dataset.accentColor;
+
+        expect(color1).toBeTruthy();
+        expect(color2).toBeTruthy();
+        expect(color1).not.toBe(color2);
     });
 
     it("should skip fetching pokemon details until both selectors have a value", () => {

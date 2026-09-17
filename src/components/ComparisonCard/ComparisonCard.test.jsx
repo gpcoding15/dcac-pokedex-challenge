@@ -40,4 +40,16 @@ describe("ComparisonCard", () => {
         expect(screen.getByText("attack")).toBeInTheDocument();
         expect(screen.getByText("55")).toBeInTheDocument();
     });
+
+    it("should apply the given accent color to the card", () => {
+        const { container } = render(<ComparisonCard pokemon={pokemon} accentColor="#e3350d" />);
+
+        expect(container.firstChild.style.getPropertyValue("--accent-color")).toBe("#e3350d");
+    });
+
+    it("should leave the accent color unset when none is given", () => {
+        const { container } = render(<ComparisonCard pokemon={pokemon} />);
+
+        expect(container.firstChild.style.getPropertyValue("--accent-color")).toBe("");
+    });
 });

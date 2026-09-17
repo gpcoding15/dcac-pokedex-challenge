@@ -14,6 +14,10 @@ import { PokemonSelector } from "../../components/PokemonSelector/PokemonSelecto
 import { ComparisonCard } from "../../components/ComparisonCard/ComparisonCard";
 import styles from "./Compare.module.css";
 import { comparisonSchema } from "./comparisonSchema";
+import { buildStatsChartData } from "./buildStatsChartData";
+
+const POKEMON1_COLOR = "#e3350d";
+const POKEMON2_COLOR = "#6890f0";
 
 export const Compare = () => {
     const [selectedPokemons, setSelectedPokemons] = useState({ pokemon1: "", pokemon2: ""});
@@ -23,18 +27,9 @@ export const Compare = () => {
     const { data: pokemon1Data, isLoading: isPokemon1Loading, error: pokemon1Error } = useGetPokemonByIdQuery(selectedPokemons.pokemon1,{ skip: !selectedPokemons.pokemon1});
     const { data: pokemon2Data, isLoading: isPokemon2Loading, error: pokemon2Error } = useGetPokemonByIdQuery(selectedPokemons.pokemon2, { skip: !selectedPokemons.pokemon2});
 
-    const statLabels = {
-        hp: "HP",
-        attack: "Attack",
-        defense: "Defense",
-        "special-attack": "Sp. Atk",
-        "special-defense": "Sp. Def",
-        speed: "Speed"
-    };
-
     const chartData =
         pokemon1Data && pokemon2Data
-            ? pokemon1Data.stats.map((stat, index) => ({ stat: statLabels[stat.stat.name], pokemon1: stat.base_stat, pokemon2: pokemon2Data.stats[index].base_stat}))
+            ? buildStatsChartData(pokemon1Data, pokemon2Data)
             : [];
 
     return (
@@ -70,32 +65,33 @@ export const Compare = () => {
             {pokemon1Data && pokemon2Data && (
                 <>
                     <div className={styles.comparison}>
-                        <ComparisonCard pokemon={pokemon1Data}/>
-                        <ComparisonCard pokemon={pokemon2Data}/>
+                        <ComparisonCard pokemon={pokemon1Data} accentColor={POKEMON1_COLOR}/>
+                        <ComparisonCard pokemon={pokemon2Data} accentColor={POKEMON2_COLOR}/>
                     </div>
 
                     <div className={styles.chart}>
                         <h2>Stats Comparison</h2>
+                        <p className={styles.chartCaption}>Base stats, 0–255</p>
 
                         <ResponsiveContainer width="100%" height={400}>
                             <RadarChart data={chartData}>
                                 <PolarGrid />
                                 <PolarAngleAxis dataKey="stat" />
-                                <PolarRadiusAxis />
+                                <PolarRadiusAxis domain={[0, 255]} />
 
                                 <Radar
                                     name={pokemon1Data.name}
                                     dataKey="pokemon1"
-                                    stroke="#e3350d"
-                                    fill="#e3350d"
+                                    stroke={POKEMON1_COLOR}
+                                    fill={POKEMON1_COLOR}
                                     fillOpacity={0.3}
                                 />
 
                                 <Radar
                                     name={pokemon2Data.name}
                                     dataKey="pokemon2"
-                                    stroke="#6890f0"
-                                    fill="#6890f0"
+                                    stroke={POKEMON2_COLOR}
+                                    fill={POKEMON2_COLOR}
                                     fillOpacity={0.3}
                                 />
 
