@@ -18,6 +18,7 @@ https://dcac-pokedex-challenge.vercel.app
 - React Router
 - Formik
 - Yup
+- Recharts
 - CSS Modules
 - PokéAPI
 
@@ -32,6 +33,7 @@ https://dcac-pokedex-challenge.vercel.app
 - Favorites management with a maximum of 6 Pokémon
 - Favorites persistence using Redux Persist
 - Pokémon comparison with Formik and Yup validation
+- Base stats comparison radar chart
 - RTK Query caching and tag configuration
 - Online/offline connection status
 - Automatic refetch when the connection is restored
@@ -126,7 +128,6 @@ npm run test:mutation
 
 - Persist a bounded subset of the RTK Query cache for stronger offline support
 - Add drag and drop ordering to the favorites team
-- Add a chart to the Pokémon comparison
 - Improve accessibility
 - Add additional UI animations and visual polish
 

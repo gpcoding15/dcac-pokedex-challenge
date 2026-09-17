@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import {
     useGetPokemonsInfiniteQuery,
@@ -10,6 +10,8 @@ import {
 } from "../../services/pokemonApi";
 import { PokemonCard } from "../../components/PokemonCard/PokemonCard";
 import { useDebounce } from "../../hooks/useDebounce";
+import { useIntersectionTrigger } from "../../hooks/useIntersectionTrigger";
+import { hasActiveSearchFilters, filterPokemons } from "./filterPokemons";
 import styles from "./Home.module.css";
 
 export const Home = () => {
@@ -18,7 +20,6 @@ export const Home = () => {
     const [search, setSearch] = useState(searchParams.get("search") ?? "");
     const [selectedType, setSelectedType] = useState(searchParams.get("type") ?? "");
     const [selectedGeneration, setSelectedGeneration] = useState(searchParams.get("generation") ?? "");
-    const loadMoreRef = useRef(null);
     const debouncedSearch = useDebounce(search, 300);
 
     const { data, fetchNextPage, hasNextPage, isFetchingNextPage, error, refetch } = useGetPokemonsInfiniteQuery();
@@ -31,27 +32,15 @@ export const Home = () => {
 
     const pokemons = data?.pages?.flatMap((page) => page.results) ?? [];
 
-    useEffect(() => {
-        const observer = new IntersectionObserver((entries) => {
-            const firstEntry = entries[0];
+    const hasActiveFilters = hasActiveSearchFilters(debouncedSearch, selectedType, selectedGeneration);
 
-            if (firstEntry.isIntersecting && hasNextPage && !isFetchingNextPage) {
-                fetchNextPage();
-            };
-        });
-
-        const currentRef = loadMoreRef.current;
-
-        if(currentRef) {
-            observer.observe(currentRef)
-        };
-
-        return () => {
-            if (currentRef) {
-                observer.unobserve(currentRef)
-            };
-        };
+    const handleReachEnd = useCallback(() => {
+        if (hasNextPage && !isFetchingNextPage) {
+            fetchNextPage();
+        }
     }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
+
+    const loadMoreRef = useIntersectionTrigger(handleReachEnd, { enabled: !hasActiveFilters });
 
     useEffect(() => {
         const params = {};
@@ -74,16 +63,15 @@ export const Home = () => {
     const typePokemonNames = new Set(typeData?.pokemon.map((type) => type.pokemon.name) ?? []);
     const generationPokemonNames = new Set (generationData?.pokemon_species.map((pokemon) => pokemon.name) ?? []);
 
-    const hasActiveFilters = debouncedSearch.trim() !== "" || selectedType !== "" || selectedGeneration !== "";
-
-    const filteredPokemons = hasActiveFilters ?
-        allPokemonsData?.results.filter((pokemon) =>{
-            const matchesSearch = debouncedSearch.trim() === "" || pokemon.name.toLowerCase().includes(debouncedSearch.toLowerCase().trim());
-            const matchesType = selectedType === "" || typePokemonNames.has(pokemon.name);
-            const matchesGeneration = selectedGeneration === "" || generationPokemonNames.has(pokemon.name);
-
-            return matchesSearch && matchesType && matchesGeneration;
-        }) ?? []: pokemons;
+    const filteredPokemons = hasActiveFilters
+        ? filterPokemons(allPokemonsData?.results ?? [], {
+              search: debouncedSearch,
+              selectedType,
+              typePokemonNames,
+              selectedGeneration,
+              generationPokemonNames,
+          })
+        : pokemons;
 
     if (error && !data) {
         return (
