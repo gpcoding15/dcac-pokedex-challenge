@@ -52,3 +52,19 @@
         width: 100%;
     }
 }
+
+.chart {
+    width: 100%;
+    max-width: 700px;
+    margin: 40px auto 0;
+}
+
+.chart h2 {
+    text-align: center;
+}
+
+.chart :global(.recharts-wrapper),
+.chart :global(.recharts-surface),
+.chart :global(.recharts-polygon) {
+    outline: none;
+}

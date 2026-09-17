@@ -8,6 +8,11 @@ jest.mock("../../components/ComparisonCard/ComparisonCard", () => ({
     ComparisonCard: ({ pokemon }) => <div data-testid="comparison-card">{pokemon.name}</div>,
 }));
 
+const buildPokemon = (name) => ({
+    name,
+    stats: [{ stat: { name: "hp" }, base_stat: 35 }],
+});
+
 describe("Compare", () => {
     beforeEach(() => {
         useGetPokemonsDataQuery.mockReturnValue({ data: { results: [] } });
@@ -43,8 +48,8 @@ describe("Compare", () => {
 
     it("should render a comparison card for each pokemon once both are selected and loaded", async () => {
         useGetPokemonByIdQuery.mockImplementation((name) => {
-            if (name === "pikachu") return { data: { name: "pikachu" }, isLoading: false };
-            if (name === "bulbasaur") return { data: { name: "bulbasaur" }, isLoading: false };
+            if (name === "pikachu") return { data: buildPokemon("pikachu"), isLoading: false };
+            if (name === "bulbasaur") return { data: buildPokemon("bulbasaur"), isLoading: false };
             return { data: undefined, isLoading: false };
         });
         const user = userEvent.setup();
@@ -185,8 +190,8 @@ describe("Compare", () => {
 
     it("should not show a not-found message when both pokemon are valid", async () => {
         useGetPokemonByIdQuery.mockImplementation((name) => {
-            if (name === "pikachu") return { data: { name: "pikachu" }, isLoading: false };
-            if (name === "bulbasaur") return { data: { name: "bulbasaur" }, isLoading: false };
+            if (name === "pikachu") return { data: buildPokemon("pikachu"), isLoading: false };
+            if (name === "bulbasaur") return { data: buildPokemon("bulbasaur"), isLoading: false };
             return { data: undefined, isLoading: false };
         });
         const user = userEvent.setup();
